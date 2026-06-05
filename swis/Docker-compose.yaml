@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    container_name: swis-backend
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./backend:/app
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    container_name: swis-frontend
+    ports:
+      - '3000:3000'
+    depends_on:
+  
+      - backend
+    volumes:
+      - ./frontend:/app
+    environment:
+      - PORT=3000
+    restart: unless-stopped
+
+networks:
+  swis-network: {}
+    

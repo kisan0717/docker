@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWIS Frontend</title>
+</head>
+<body>
+    <h1>Welcome to SWIS Frontend</h1>
+    <p>This is a simple HTML page served by Express.js</p>
+    
+    <h2>Data from Backend:</h2>
+    <ul id="dataList">Loading...</ul>
+    
+    <script>
+        // Fetch data from backend API
+        const backendURL = 'http://localhost:8000';
+        
+        fetch(backendURL + '/api')
+            .then(response => response.json())
+            .then(data => {
+                const dataList = document.getElementById('dataList');
+                dataList.innerHTML = '';
+                
+                if (data.data && Array.isArray(data.data)) {
+                    data.data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        dataList.appendChild(li);
+                    });
+                } else {
+                    dataList.innerHTML = '<li>No data received</li>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.getElementById('dataList').innerHTML = '<li>Error loading data: ' + error.message + '</li>';
+            });
+    </script>
+</body>
+</html>
