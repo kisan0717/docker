@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from business import get_data
 from flask_cors import CORS
 
@@ -8,7 +8,7 @@ CORS(app)  # Enable CORS for all routes
 @app.route('/')
 def hello_world():
     
-    return 'Hello, world!'
+    return render_template('index.html')
 
 @app.route('/api', methods=['GET'])
 def api():
